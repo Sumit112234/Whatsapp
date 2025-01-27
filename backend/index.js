@@ -24,6 +24,14 @@ app.use(cors({
 app.use(express.json()); 
 app.use(cookieParser());
 
+app.get("/",(request,response)=>{
+    ///server to client
+    response.json({
+        message : "Server is running " + PORT
+    })
+})
+
+
 app.use("/api/auth", authRoutes);
 app.use("/api/messages", messageRoutes);
 app.use("/api/users", userRoutes);
