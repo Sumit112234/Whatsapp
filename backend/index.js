@@ -18,7 +18,7 @@ dotenv.config();
 // // PORT should be assigned after calling dotenv.config() because we need to access the env variables. Didn't realize while recording the video. Sorry for the confusion.
 const PORT = process.env.PORT || 5000;
 app.use(cors({
-    origin: "http://localhost:5173", // Frontend URL
+    origin: process.env.FRONTEND_URL, // Frontend URL
     credentials: true, // Allow credentials (cookies)
 }));
 app.use(express.json()); 
