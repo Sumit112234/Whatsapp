@@ -99,10 +99,8 @@ app.use("/api/users", userRoutes);
 
 // Start server
 connectDb()
-.then(()=>{
-    server.listen(PORT, () => {
-        // connectDb();
-        console.log(`Server running on port ${PORT}`);
-    });
-    
-})
+server.listen(PORT, () => {
+    // connectDb();
+    console.log(`Server running on port ${PORT}`);
+});
+

@@ -15,6 +15,18 @@ export const getUsersForSidebar = async (req, res) => {
 		res.status(500).json({ error: "Internal server error" });
 	}
 };
+export const getUser = async (req, res) => {
+	try {
+		// const loggedInUserId = req.user._id;
+
+		const filteredUsers = await User.find({_id : '679393e64a7f0cae1f6bb8e5' }).select("-password");
+
+		res.status(200).json(filteredUsers);
+	} catch (error) {
+		console.error("Error in getUsersForSidebar: ", error.message);
+		res.status(500).json({ error: "Internal server error" , message : "no user found!" ,e : error});
+	}
+};
 
 export const getUserDetails = async (req, res) => {
 	try {
