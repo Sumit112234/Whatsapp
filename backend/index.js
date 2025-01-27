@@ -10,7 +10,10 @@ import userRoutes from "./routes/user.js";
 
 
 import connectDb from './database/connectDb.js'
-import { app, server } from "./socket/socket.js";
+// import { app, server } from "./socket/socket.js";
+import express from "express";
+
+const app = express();
 
 dotenv.config();
 
@@ -54,7 +57,7 @@ app.use("/api/messages", messageRoutes);
 app.use("/api/users", userRoutes);
 
 
-server.listen(PORT, () => {
+app.listen(PORT, () => {
 	connectDb();
 	console.log(`Server Running on port ${PORT}`);
 });
