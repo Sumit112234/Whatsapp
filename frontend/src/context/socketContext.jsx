@@ -11,6 +11,7 @@ export const useSocketContext = () => {
 let BackendUrl = import.meta.env.VITE_API_URL;
 let realBackendUrl = import.meta.env.VITE_API_BACKEND_URL;
 
+
 console.log('socket url 1: ',realBackendUrl,  BackendUrl.slice(0,37))
 
 export const SocketContextProvider = ({ children }) => {
