@@ -8,16 +8,19 @@ export const useSocketContext = () => {
 	return useContext(SocketContext);
 };
 
+let BackendUrl = import.meta.env.VITE_API_URL;
+
 export const SocketContextProvider = ({ children }) => {
 	const [socket, setSocket] = useState(null);
 	const [onlineUsers, setOnlineUsers] = useState([]);
 	const [messages, setMessages] = useState([]);
 	const [unreadCounts, setUnreadCounts] = useState({});
     const { user } = useAuth();
-
+	
 	useEffect(() => {
+
 		if (user) {
-			const socket = io("http://localhost:7896", {
+			const socket = io(BackendUrl.slice(0,21), {
 				query: {
 					userId: user._id,
 				},

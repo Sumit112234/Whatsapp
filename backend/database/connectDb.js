@@ -8,7 +8,6 @@ const connectDb =  async function(){
    
    
     let uri = process.env.MONGO_URI;
-    // console.log(uri);
 
     try {
 
