@@ -11,27 +11,27 @@ const Temp = () => {
     const [chat, setChat] = useState([]);
     const [typing, setTyping] = useState(false);
 
-    useEffect(() => {
-        if (senderId) {
-            socket.emit('register', { userId: senderId });
-        }
+    // useEffect(() => {
+    //     if (senderId) {
+    //         socket.emit('register', { userId: senderId });
+    //     }
 
-        socket.on('typing', (typingSenderId) => {
-            if (typingSenderId !== senderId) {
-                setTyping(typingSenderId);
-                setTimeout(() => setTyping(false), 2000);
-            }
-        });
+    //     socket.on('typing', (typingSenderId) => {
+    //         if (typingSenderId !== senderId) {
+    //             setTyping(typingSenderId);
+    //             setTimeout(() => setTyping(false), 2000);
+    //         }
+    //     });
 
-        socket.on('newMessage', ({ senderId: incomingSenderId, message: incomingMessage }) => {
-            setChat((prevChat) => [...prevChat, { senderId: incomingSenderId, message: incomingMessage }]);
-        });
+    //     socket.on('newMessage', ({ senderId: incomingSenderId, message: incomingMessage }) => {
+    //         setChat((prevChat) => [...prevChat, { senderId: incomingSenderId, message: incomingMessage }]);
+    //     });
 
-        return () => {
-            socket.off('typing');
-            socket.off('newMessage');
-        };
-    }, [senderId]);
+    //     return () => {
+    //         socket.off('typing');
+    //         socket.off('newMessage');
+    //     };
+    // }, [senderId]);
 
     const handleSendMessage = () => {
         if (message.trim() && senderId && receiverId) {
