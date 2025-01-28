@@ -10,10 +10,11 @@ import userRoutes from "./routes/user.js";
 
 
 import connectDb from './database/connectDb.js'
-// import { app, server } from "./socket/socket.js";
-import express from "express";
+import { app, server } from "./socket/socket.js";
+import User from "./models/user.js";
 
-const app = express();
+
+// const app = express();
 
 dotenv.config();
 
@@ -40,14 +41,12 @@ app.get("/api",(request,response)=>{
         message : "Server is running for api" + PORT
     })
 })
-app.get("/api/user",(request,response)=>{
+app.get("/api/user",async(request,response)=>{
+    let users = await User.find();
     ///server to client
     response.json({
         message : "Server is running for api" + PORT,
-        users : {
-            name : "sumit",
-            position : "developer"
-        }
+        users
     })
 })
 
@@ -57,7 +56,9 @@ app.use("/api/messages", messageRoutes);
 app.use("/api/users", userRoutes);
 
 
-app.listen(PORT, () => {
-	connectDb();
-	console.log(`Server Running on port ${PORT}`);
-});
+connectDb().
+then(()=>{
+    server.listen(PORT, () => {
+        console.log(`Server Running on port ${PORT}`);
+    });
+})
