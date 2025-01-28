@@ -9,6 +9,9 @@ export const useSocketContext = () => {
 };
 
 let BackendUrl = import.meta.env.VITE_API_URL;
+let realBackendUrl = import.meta.env.VITE_API_BACKEND_URL;
+
+console.log('socket url 1: ',realBackendUrl,  BackendUrl.slice(0,37))
 
 export const SocketContextProvider = ({ children }) => {
 	const [socket, setSocket] = useState(null);
@@ -20,11 +23,12 @@ export const SocketContextProvider = ({ children }) => {
 	useEffect(() => {
 
 		if (user) {
-			console.log('socket url : ', BackendUrl.slice(0,37))
+			console.log('socket url : ', realBackendUrl || BackendUrl.slice(0,37))
 			const socket = io(BackendUrl.slice(0,37), {
 				query: {
 					userId: user._id,
 				},
+				secure : true
 			});
 
 			setSocket(socket);

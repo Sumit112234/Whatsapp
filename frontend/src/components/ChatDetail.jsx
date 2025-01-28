@@ -267,8 +267,8 @@ const ChatDetail = () => {
           <div
             className={`h-full space-y-[2px] ${
               darkTheme
-                ? "bg-gray-900 bg-[url('./whatsapp_wallpaper_1.png')]"
-                : "bg-gray-100 bg-[url('./whatsapp_wallpaper_2.jpg')]"
+                ? "bg-gray-900 bg-[url('../assets/whatsapp_wallpaper_1.png')]"
+                : "bg-gray-100 bg-[url('../assets/whatsapp_wallpaper_2.jpg')]"
             }  bg-contain overflow-y-scroll scroll-smooth scrollbar-thin ${
               darkTheme
                 ? "scrollbar-thumb-gray-600 scrollbar-track-gray-800"
@@ -535,7 +535,7 @@ const ChatDetail = () => {
             <div className="mx-auto">
               <img
                 className="h-50 w-50 mx-auto"
-                src="./laptop_img.png"
+                src="whatappCloneTemp/frontend/src/assets/laptop_img.png"
                 alt="Laptop"
               />
             </div>
