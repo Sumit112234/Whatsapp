@@ -31,5 +31,3 @@ frontend/node_modules
 .env
 .backend/.env
 .frontend/.env
-.backend
-backend
