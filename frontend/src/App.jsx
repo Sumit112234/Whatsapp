@@ -29,7 +29,7 @@ function App() {
     <Router>
       <Routes>
       <Route path='/' element={user ? <Whatsapp /> : <Navigate to={"/login"} />} />
-      <Route path='/temp' element={<Temp/>} />
+      {/* <Route path='/temp' element={<Temp/>} /> */}
 				<Route path='/login' element={user ? <Navigate to='/' /> : <Login />} />
 				<Route path='/signup' element={user ? <Navigate to='/' /> : <Signup />} />
       </Routes>
