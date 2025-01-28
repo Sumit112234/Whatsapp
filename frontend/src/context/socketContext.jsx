@@ -20,13 +20,15 @@ export const SocketContextProvider = ({ children }) => {
 	useEffect(() => {
 
 		if (user) {
-			const socket = io(BackendUrl.slice(0,21), {
+			console.log('socket url : ', BackendUrl.slice(0,37))
+			const socket = io(BackendUrl.slice(0,37), {
 				query: {
 					userId: user._id,
 				},
 			});
 
 			setSocket(socket);
+			console.log(socket);
 
 			// socket.on() is used to listen to the events. can be used both on client and server side
 			socket.on("getOnlineUsers", (users) => {
