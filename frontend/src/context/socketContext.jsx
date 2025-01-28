@@ -25,12 +25,13 @@ export const SocketContextProvider = ({ children }) => {
 
 		if (user) {
 			console.log('socket url : ', realBackendUrl || BackendUrl.slice(0,37))
-			const socket = io(BackendUrl.slice(0,37), {
+			const socket = io(realBackendUrl, {
 				query: {
 					userId: user._id,
 				},
 				secure : true
 			});
+			
 
 			setSocket(socket);
 			console.log(socket);
