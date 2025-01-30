@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState ,useRef } from "react";
 import { useSocketContext } from "../context/socketContext";
 import notificationSound from "../assets/new-message-sound.mp3";
 import moment from "moment";
@@ -11,9 +11,15 @@ const useListenMessages = () => {
 
   // State to track unread message counts for each user
  
+  const useRefe = useRef(false);
 
   useEffect(() => {
+    if(useRefe.current)
+        return ;
+
+
     socket?.on("newMessage", (newMessage) => {
+      useRefe.current = true;
       //console.log("Message from unreadcount before update:", unreadCounts);
   
       if (
@@ -43,7 +49,9 @@ const useListenMessages = () => {
           return updatedCounts;
         });
       }
+      socket?.off("newMessage");
     });
+  
   
     return () => socket?.off("newMessage");
   }, [socket, selectedUser, user, setMessages, unreadCounts]);

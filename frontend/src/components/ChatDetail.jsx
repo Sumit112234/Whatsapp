@@ -279,7 +279,7 @@ const ChatDetail = () => {
               messages.map((ele, index) =>
                 ele.isUser ? (
                   ele.type === "typing" ? (
-                    <div className="p-2 text-start rounded-full text-green-400 animate-bounce shadow-lg overflow-hidden relative">
+                    <div  key={index} className="p-2 text-start rounded-full text-green-400 animate-bounce shadow-lg overflow-hidden relative">
                       <span className="inline-block animate-typing">
                         ...Typing
                       </span>
@@ -290,6 +290,7 @@ const ChatDetail = () => {
                       className="chat text-end px-4 flex justify-end"
                     >
                       <div
+                      key={index}
                         className={`chatbox relative w-fit pl-2 pt-2 ${
                           ele.isFirstMsg
                             ? "rounded-b-xl rounded-tl-xl"

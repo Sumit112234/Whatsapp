@@ -21,7 +21,7 @@ const app = express();
 const server = http.createServer(app);
 const io = new Server(server, {
   cors: {
-    origin: "https://whatsapp-pre.vercel.app",
+    origin: [process.env.FRONTEND_URL,'http://localhost:5173'],
     methods: ["GET", "POST"],
     credentials: true,
   },
@@ -29,7 +29,7 @@ const io = new Server(server, {
 
 // Middleware
 app.use(cors({
-  origin: process.env.FRONTEND_URL,
+  origin: [process.env.FRONTEND_URL, 'http://localhost:5173'],
   credentials: true,
 }));
 app.use(express.json());
@@ -55,6 +55,12 @@ app.use("/api/messages", messageRoutes);
 app.use("/api/users", userRoutes);
 
 // Socket.IO functionality
+
+export const getReceiverSocketId = (receiverId) => {
+  return userSocketMap[receiverId];
+};
+
+
 const userSocketMap = {}; // Map to store connected users and their socket IDs
 
 io.on("connection", (socket) => {
@@ -70,12 +76,18 @@ io.on("connection", (socket) => {
   io.emit("getOnlineUsers", Object.keys(userSocketMap));
 
   // Handle "typing" event
+  // socket.on("typing", ({ senderId, receiverId }) => {
+  //   const receiverSocketId = getReceiverSocketId(receiverId);
+  //   if (receiverSocketId) {
+  //     io.to(receiverSocketId).emit("typing", senderId);
+  //   }
+  // });
   socket.on("typing", ({ senderId, receiverId }) => {
-    const receiverSocketId = userSocketMap[receiverId];
-    if (receiverSocketId) {
-      io.to(receiverSocketId).emit("typing", senderId);
-    }
-  });
+      const receiverSocketId = getReceiverSocketId(receiverId);
+      if (receiverSocketId) {
+        io.to(receiverSocketId).emit("typing", senderId);
+      }
+      });
 
   // Handle "sendMessage" event
   socket.on("sendMessage", ({ senderId, receiverId, message }) => {
