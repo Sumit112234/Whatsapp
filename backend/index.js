@@ -125,7 +125,7 @@ connectDb()
   });
 
 export { getReceiverSocketId, io };
-
+export default server;
 
 // import express from "express";
 // import dotenv from "dotenv";
