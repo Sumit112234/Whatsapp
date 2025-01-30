@@ -55,8 +55,7 @@ app.use("/api/messages", messageRoutes);
 app.use("/api/users", userRoutes);
 
 // Socket.IO functionality
-
-export const getReceiverSocketId = (receiverId) => {
+ const getReceiverSocketId = (receiverId) => {
   return userSocketMap[receiverId];
 };
 
@@ -125,7 +124,7 @@ connectDb()
     console.error("Database connection failed:", err);
   });
 
-export { app, server, io };
+export { getReceiverSocketId, io };
 
 
 // import express from "express";
