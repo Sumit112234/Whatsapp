@@ -8,8 +8,8 @@ export const useSocketContext = () => {
 	return useContext(SocketContext);
 };
 
-let BackendUrl = import.meta.env.VITE_API_URL;
-let realBackendUrl = import.meta.env.VITE_API_BACKEND_URL;
+let BackendUrl = import.meta.env.NODE_ENV === "production" ? import.meta.env.VITE_API_URL : '/api'; 
+let realBackendUrl = import.meta.env.NODE_ENV === "production" ? import.meta.env.VITE_API_BACKEND_URL : '/';
 
 
 console.log('comming from socket : ',realBackendUrl,  BackendUrl.slice(0,37))
