@@ -5,10 +5,12 @@ import dotenv from "dotenv";
 dotenv.config();
 const app = express();
 
+// console.log(process.env.FRONTEND_URL )
+
 const server = http.createServer(app);
 const io = new Server(server, {
 	cors: {
-		origin: [process.env.FRONTEND_URL ,'http://localhost:5173'],
+		origin: process.env.FRONTEND_URL ,
 		methods: ["GET", "POST"],
 	},
 });
@@ -36,6 +38,13 @@ io.on("connection", (socket) => {
 		  io.to(receiverSocketId).emit("typing", senderId);
 		}
 	  });
+	  socket.on("sendMessage", ({ senderId, receiverId, message }) => {
+		    const receiverSocketId = userSocketMap[receiverId];
+		    if (receiverSocketId) {
+		      io.to(receiverSocketId).emit("newMessage", { senderId, message });
+		    }
+		  });
+		
 	// socket.on() is used to listen to the events. can be used both on client and server side
 	socket.on("disconnect", () => {
 		console.log("user disconnected", socket.id);

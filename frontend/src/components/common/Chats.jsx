@@ -57,7 +57,7 @@ const Chats = ({filter, chats, setChats,filteredChats}) => {
   
     {/* Chat single */}
     {/* {console.log(filteredChats)} */}
-    {filteredChats.length > 0 &&
+    {filteredChats && filteredChats.length > 0 &&
       filteredChats.map((chatDetails, i) => {
         return (
           <Chat

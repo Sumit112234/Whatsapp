@@ -1,6 +1,7 @@
 import axios from "axios";
 
-let BackendUrl = import.meta.env.NODE_ENV === "production" ? import.meta.env.VITE_API_URL : '/api'; 
+let BackendUrl = '/api'; 
+// let BackendUrl =  import.meta.env.VITE_API_URL;
 
 export async function sendMessage(message,senderId,recieverId){
     

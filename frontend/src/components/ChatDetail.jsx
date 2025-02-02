@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import RoundedBtn from "./common/RoundedBtn";
 import { MdSearch } from "react-icons/md";
 import { HiDotsVertical, HiOutlinePaperClip } from "react-icons/hi";
@@ -13,18 +13,26 @@ import { useNavigate } from "react-router-dom";
 import { getMessage, sendMessage } from "../utils/messageHandler";
 import moment from "moment";
 import { useSocketContext } from "../context/socketContext";
-import useListenMessages from "../utils/useListenMessage";
+import useListenMessages from "../utils/useListenMessage.js";
 
 const ChatDetail = () => {
   const [userInput, setUserInput] = useState("");
   const [element, setElement] = useState(""); // b0 b1 g0 g1
   const { selectedUser, setSelectedUser,user, setUser, darkTheme, setMobileSelectedUser } = useAuth();
   const { socket, messages, setMessages } = useSocketContext();
-  const [isTyping, setIsTyping] = useState(false);
+  const [typing, setTyping] = useState(false);
 
   const navigate = useNavigate();
   useListenMessages();
   
+
+  const lastMessageRef = useRef();
+  useEffect(() => {
+		setTimeout(() => {
+			lastMessageRef.current?.scrollIntoView({ behavior: "smooth" });
+		}, 100);
+	}, [messages]);
+
 
   const handelSubmit = async (e) => {
     e.preventDefault();
@@ -108,8 +116,8 @@ const ChatDetail = () => {
 
     if (socket) {
       socket.on("typing", (senderId) => {
-        if (senderId === selectedUser._id) {
-          setIsTyping(true);
+        if (senderId === selectedUser?._id) {
+          setTyping(true);
 
           // Update the messages array
           setMessages((prevMessages) => {
@@ -123,7 +131,7 @@ const ChatDetail = () => {
               // If the "typing" message already exists at the last index, extend its timeout
               clearTimeout(lastMessage.timeoutId); // Clear previous timeout
               const timeoutId = setTimeout(() => {
-                setIsTyping(false);
+                setTyping(false);
                 setMessages((msgs) =>
                   msgs.filter(
                     (msg) => !(msg.type === "typing" && msg.sender === senderId)
@@ -142,7 +150,7 @@ const ChatDetail = () => {
             } else {
               // Add a new "typing" message if it doesn't exist
               const timeoutId = setTimeout(() => {
-                setIsTyping(false);
+                setTyping(false);
                 setMessages((msgs) =>
                   msgs.filter(
                     (msg) => !(msg.type === "typing" && msg.sender === senderId)
@@ -246,11 +254,10 @@ const ChatDetail = () => {
                     darkTheme ? "text-gray-400" : "text-gray-600"
                   } text-xs`}
                 >
-                  {isTyping ? (
-                    <div className="text-green-400">Typing...</div>
-                  ) : (
-                    ""
-                  )}
+              
+                   <div className={` ${!messages.at(-1)?.type ? 'hidden' : '' } text-green-400`}>Typing....</div>
+                  
+                  
                 </p>
               </div>
             </div>
@@ -267,8 +274,8 @@ const ChatDetail = () => {
           <div
             className={`h-full space-y-[2px] ${
               darkTheme
-                ? "bg-gray-900 bg-[url('../assets/whatsapp_wallpaper_1.png')]"
-                : "bg-gray-100 bg-[url('../assets/whatsapp_wallpaper_2.jpg')]"
+                ? "bg-gray-900 bg-[url('whatsapp_wallpaper_1.png')]"
+                : "bg-gray-100 bg-[url('whatsapp_wallpaper_2.jpg')]"
             }  bg-contain overflow-y-scroll scroll-smooth scrollbar-thin ${
               darkTheme
                 ? "scrollbar-thumb-gray-600 scrollbar-track-gray-800"
@@ -536,7 +543,7 @@ const ChatDetail = () => {
             <div className="mx-auto">
               <img
                 className="h-50 w-50 mx-auto"
-                src="whatappCloneTemp/frontend/src/assets/laptop_img.png"
+                src="laptop_img.png"
                 alt="Laptop"
               />
             </div>

@@ -50,7 +50,7 @@ const LeftMenu = () => {
         //console.log("Fetching chats...");
         try {
           let res = await getAllUser();
-          //console.log(res);
+          // console.log("response from useEffect " , res);
           setChats(res);
           setFilteredChats(res); // Initialize filteredChats with the fetched data
         } catch (e) {
@@ -64,6 +64,7 @@ const LeftMenu = () => {
   // Update filteredChats when searchTerm or chats changes
   useEffect(() => {
     if (searchTerm === "") {
+      // console.log("all chats : ", chats);
       setFilteredChats(chats); // Show all chats if search term is empty
     } else {
       setFilteredChats(
